@@ -22,6 +22,13 @@ if (!function_exists('my_roles')) {
     }
 }
 
+if (!function_exists('tahun')) {
+    function tahun()
+    {
+        return session('tahun') ?? date('Y');
+    }
+}
+
 if (!function_exists('strip_tags_content')) {
     function strip_tags_content($string)
     {
@@ -163,10 +170,10 @@ if (!function_exists('str_role')) {
 if (!function_exists('get_image')) {
     function get_image($path_image = NULL)
     {
-        if(env('APP_ENV') == 'local') {
+        if (env('APP_ENV') == 'local') {
             return $path_image;
         }
-        
+
         $type = pathinfo($path_image, PATHINFO_EXTENSION);
         $data = file_get_contents($path_image);
         return 'data:image/' . $type . ';base64,' . base64_encode($data);

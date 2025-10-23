@@ -24,8 +24,8 @@ class LaporanStdController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-
-            $listdata = SuratTugasDinas::with(['departemen', 'pegawai'])->status_std(['200'])
+            $tahun = tahun();
+            $listdata = SuratTugasDinas::with(['departemen', 'pegawai'])->status_std(['200'])->tahun($tahun)
                 ->select([
                     'app_surat_tugas_dinas.id',
                     'app_surat_tugas_dinas.nomor_std',
@@ -153,7 +153,7 @@ class LaporanStdController extends Controller
 
         $tgl_mulai = Carbon::parse(trim($tanggal[0]))->format('Y-m-d');
         $tgl_akhir = Carbon::parse(trim($tanggal[1]))->format('Y-m-d');
-        $liststd = SuratTugasDinas::with(['departemen', 'pegawai'])->status_std(['200'])
+        $liststd = SuratTugasDinas::with(['departemen', 'pegawai'])->status_std(['200'])->tahun(tahun())
             ->select([
                 'app_surat_tugas_dinas.id',
                 'app_surat_tugas_dinas.nomor_std',

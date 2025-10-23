@@ -23,8 +23,8 @@ class LaporanSppdController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-
-            $listdata = SuratPerjalananDinas::with(['departemen'])->status_spd(['200'])->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
+            $tahun = tahun();
+            $listdata = SuratPerjalananDinas::with(['departemen'])->status_spd(['200'])->tahun($tahun)->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
                 ->select([
                     'app_surat_perjalanan_dinas.id',
                     'app_surat_perjalanan_dinas.nomor_spd',
@@ -146,7 +146,7 @@ class LaporanSppdController extends Controller
 
         $tgl_mulai = Carbon::parse(trim($tanggal[0]))->format('Y-m-d');
         $tgl_akhir = Carbon::parse(trim($tanggal[1]))->format('Y-m-d');
-        $listsppd = SuratPerjalananDinas::with(['departemen'])->status_spd(['200'])->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
+        $listsppd = SuratPerjalananDinas::with(['departemen'])->status_spd(['200'])->tahun(tahun())->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
             ->select([
                 'app_surat_perjalanan_dinas.id',
                 'app_surat_perjalanan_dinas.nomor_spd',

@@ -19,7 +19,7 @@ class ReviewSppdController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $listdata = SuratPerjalananDinas::with(['departemen'])->tahun(date('Y'))->status_spd(['102'])->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
+            $listdata = SuratPerjalananDinas::with(['departemen'])->tahun(tahun())->status_spd(['102'])->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
                 ->select([
                     'app_surat_perjalanan_dinas.id',
                     'app_surat_perjalanan_dinas.nomor_spd',
@@ -94,7 +94,7 @@ class ReviewSppdController extends Controller
     public function pembatalan(Request $request)
     {
         if ($request->ajax()) {
-            $listdata = SuratPerjalananDinas::tahun(date('Y'))->status_spd(['409'])->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
+            $listdata = SuratPerjalananDinas::tahun(tahun())->status_spd(['409'])->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
                 ->select([
                     'app_surat_perjalanan_dinas.id',
                     'app_surat_perjalanan_dinas.nomor_spd',

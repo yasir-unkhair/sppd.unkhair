@@ -16,7 +16,8 @@ class DashboardController extends Controller
     //
     public function index()
     {
-        $tahun = date('Y');
+        $tahun = tahun();
+
         $jml_pegawai = Pegawai::all()->count();
         $jml_departemen = Departemen::departemen(NULL)->get()->count();
         $jml_sppd = SuratPerjalananDinas::tahun($tahun)->status_spd(['200'])->get()->count();
@@ -32,7 +33,7 @@ class DashboardController extends Controller
 
         if (auth()->user()->hasRole('ppk') && in_array(session('role'), ['ppk'])) {
             $datatable = [
-                'tahun' => date('Y'),
+                'tahun' => tahun(),
                 'datatable_departemen' => [
                     'url' => route('admin.dashboard.satistik-departemen'),
                     'id_table' => 'id-datatable1',
@@ -68,11 +69,11 @@ class DashboardController extends Controller
         if ($request->ajax()) {
             $listdata = Departemen::withCount([
                 'sppd AS jml_sppd' => function (Builder $query) {
-                    $query->whereYear('created_at', date('Y'))
+                    $query->whereYear('created_at', tahun())
                         ->where('status_spd', '200');
                 },
                 'std AS jml_std' => function (Builder $query) {
-                    $query->whereYear('created_at', date('Y'))
+                    $query->whereYear('created_at', tahun())
                         ->where('status_std', '200');
                 }
             ])->where('parent_id', NULL)->orderBy('created_at', 'ASC');
@@ -102,11 +103,11 @@ class DashboardController extends Controller
         if ($request->ajax()) {
             $listdata = Pegawai::withCount([
                 'sppd as jml_sppd' => function (Builder $query) {
-                    $query->whereYear('created_at', date('Y'))
+                    $query->whereYear('created_at', tahun())
                         ->where('status_spd', '200');
                 },
                 'std AS jml_std' => function (Builder $query) {
-                    $query->whereYear('created_at', date('Y'))
+                    $query->whereYear('created_at', tahun())
                         ->where('status_std', '200');
                 }
             ])->orderBy('nama_pegawai', 'ASC');

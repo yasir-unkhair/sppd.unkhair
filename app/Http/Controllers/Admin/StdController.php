@@ -19,7 +19,7 @@ class StdController extends Controller
 
     public function index(Request $request)
     {
-        $tahun = date('Y');
+        $tahun = tahun();
 
         $std_dk = 0;
         if (auth()->user()->hasRole('admin-st-dk') && in_array(session('role'), ['admin-st-dk'])) {
@@ -68,7 +68,7 @@ class StdController extends Controller
             abort(403);
         }
 
-        $tahun = date('Y');
+        $tahun = tahun();
         $listdata = SuratTugasDinas::with(['pegawai'])->status_std(['206'])->tahun($tahun)
             ->select([
                 'app_surat_tugas_dinas.id',

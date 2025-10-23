@@ -10,6 +10,7 @@ class Login extends Component
 {
     public $username;
     public $password;
+    public $tahun;
     public $bool_peserta = 0;
 
     public function render()
@@ -28,7 +29,8 @@ class Login extends Component
         // sleep(3);
         $this->validate([
             'username' => 'required|exists:users,username',
-            'password' => 'required'
+            'password' => 'required',
+            'tahun' => 'required'
         ]);
 
         // dd($this);
@@ -70,11 +72,13 @@ class Login extends Component
                     $role = $r->name;
                 }
                 session()->put([
-                    'role' => $role
+                    'role' => $role,
+                    'tahun' => $this->tahun
                 ]);
             } else {
                 session()->put([
-                    'role' => NULL
+                    'role' => NULL,
+                    'tahun' => $this->tahun
                 ]);
             }
             alert()->success('Success', 'Berhasil Login, Selamat datang ' . $login->name);

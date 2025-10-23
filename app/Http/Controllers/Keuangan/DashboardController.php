@@ -14,7 +14,7 @@ class DashboardController extends Controller
     //
     public function index()
     {
-        $tahun = date('Y');
+        $tahun = tahun();
         $jml_pegawai = Pegawai::all()->count();
         $jml_departemen = Departemen::departemen(NULL)->get()->count();
         $jml_sppd = SuratPerjalananDinas::tahun($tahun)->status_spd(['200'])->get()->count();

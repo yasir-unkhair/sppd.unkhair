@@ -20,7 +20,7 @@ class SppdController extends Controller
         if ($request->ajax()) {
 
             // NULL maka data sppd akan tampil semua
-            $tahun = date('Y');
+            $tahun = tahun();
             $admin_spd = NULL;
 
             // menampilkan data sppd hanya punya admin-spd

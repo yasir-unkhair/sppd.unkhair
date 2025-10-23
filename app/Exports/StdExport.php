@@ -25,7 +25,7 @@ class StdExport implements FromView
     {
         $tgl_mulai = Carbon::parse($this->tgl_mulai)->format('Y-m-d');
         $tgl_akhir = Carbon::parse($this->tgl_akhir)->format('Y-m-d');
-        $liststd = SuratTugasDinas::with(['departemen', 'pegawai'])->status_std(['200'])
+        $liststd = SuratTugasDinas::with(['departemen', 'pegawai'])->status_std(['200'])->tahun(tahun())
             ->select([
                 'app_surat_tugas_dinas.id',
                 'app_surat_tugas_dinas.nomor_std',

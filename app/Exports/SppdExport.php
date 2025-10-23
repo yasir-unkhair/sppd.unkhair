@@ -25,7 +25,8 @@ class SppdExport implements FromView
     {
         $tgl_mulai = Carbon::parse($this->tgl_mulai)->format('Y-m-d');
         $tgl_akhir = Carbon::parse($this->tgl_akhir)->format('Y-m-d');
-        $listsppd = SuratPerjalananDinas::with(['departemen'])->status_spd(['200'])->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
+        $tahun = tahun();
+        $listsppd = SuratPerjalananDinas::with(['departemen'])->status_spd(['200'])->tahun($tahun)->join('app_pegawai AS b', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'b.id')
             ->select([
                 'app_surat_perjalanan_dinas.id',
                 'app_surat_perjalanan_dinas.nomor_spd',

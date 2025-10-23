@@ -18,7 +18,7 @@ class SppdController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $listdata = SuratPerjalananDinas::join('app_pegawai', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'app_pegawai.id')->status_spd(['200'])
+            $listdata = SuratPerjalananDinas::join('app_pegawai', 'app_surat_perjalanan_dinas.pegawai_id', '=', 'app_pegawai.id')->status_spd(['200'])->tahun(tahun())
                 ->select([
                     'app_surat_perjalanan_dinas.id',
                     'app_surat_perjalanan_dinas.nomor_spd',

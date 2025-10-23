@@ -19,7 +19,7 @@ class ReviewStdController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $tahun = date('Y');
+            $tahun = tahun();
             $pimpinan = auth()->user()->pj_pimpinan()->first();
             $pimpinan_id = '-';
             if ($pimpinan) {
