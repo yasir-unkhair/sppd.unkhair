@@ -174,9 +174,22 @@ if (!function_exists('get_image')) {
             return $path_image;
         }
 
+        // $type = pathinfo($path_image, PATHINFO_EXTENSION);
+        // $data = file_get_contents($path_image);
+        // return 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        //$avatarUrl = 'https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png';
+
+        $arrContextOptions = array(
+            "ssl" => array(
+                "verify_peer" => false,
+                "verify_peer_name" => false,
+            ),
+        );
         $type = pathinfo($path_image, PATHINFO_EXTENSION);
-        $data = file_get_contents($path_image);
-        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+        $avatarData = file_get_contents($path_image, false, stream_context_create($arrContextOptions));
+        $avatarBase64Data = base64_encode($avatarData);
+        return 'data:image/' . $type . ';base64,' . $avatarBase64Data;
     }
 }
 
