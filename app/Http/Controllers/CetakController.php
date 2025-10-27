@@ -42,7 +42,10 @@ class CetakController extends Controller
         }
 
         $data = ['sppd' => $sppd];
-        $pdf = PDF::loadView('pdf.cetak-sppd', $data)->setPaper('a4', 'portrait');
+        $pdf = PDF::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+        ])->loadView('pdf.cetak-sppd', $data)->setPaper('a4', 'portrait');
 
 
         $judul = date('Ymd') . ' - ' . 'Surat Perjalanan Dinas' . '.pdf';
@@ -85,7 +88,10 @@ class CetakController extends Controller
         }
 
         $data = ['std' => $std];
-        $pdf = PDF::loadView('pdf.cetak-std', $data)->setPaper('a4', 'portrait');
+        $pdf = PDF::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+        ])->loadView('pdf.cetak-std', $data)->setPaper('a4', 'portrait');
 
 
         $judul = date('Ymd') . ' - ' . 'Surat Tugas Dinas' . '.pdf';
