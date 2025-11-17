@@ -207,6 +207,14 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{ route('keuangan.std.index') }}"
+                class="nav-link {{ routeIs(['keuangan.std.index']) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-newspaper-o"></i>
+                <p>Data STD</p>
+            </a>
+        </li>
+
         {{-- <li class="nav-item">
             <a href="" class="nav-link {{ routeIs(['']) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-book"></i>

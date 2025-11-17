@@ -26,11 +26,11 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 
 Livewire::setUpdateRoute(function ($handle) {
-    return Route::post('/'.env('APP_FOLDER').'/public/livewire/update', $handle);
+    return Route::post('/' . env('APP_FOLDER') . '/public/livewire/update', $handle);
 });
 
 Livewire::setScriptRoute(function ($handle) {
-    return Route::get('/'.env('APP_FOLDER').'/public/livewire/livewire.js', $handle);
+    return Route::get('/' . env('APP_FOLDER') . '/public/livewire/livewire.js', $handle);
 });
 
 Route::get('/login', App\Livewire\Auth\Login::class)->name('auth.login');
@@ -119,6 +119,9 @@ Route::group(['middleware' => 'isLogin'], function () {
         Route::group(['middleware' => ['role:keuangan']], function () {
             Route::controller(App\Http\Controllers\Keuangan\SppdController::class)->group(function () {
                 Route::get('/sppd/index', 'index')->name('keuangan.sppd.index');
+            });
+            Route::controller(App\Http\Controllers\Keuangan\StdController::class)->group(function () {
+                Route::get('/std/index', 'index')->name('keuangan.std.index');
             });
         });
     });
