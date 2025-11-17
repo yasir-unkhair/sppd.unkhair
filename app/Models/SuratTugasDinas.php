@@ -40,6 +40,9 @@ class SuratTugasDinas extends Model
         'tanggal_mulai_tugas',
         'tanggal_selesai_tugas',
         'keterangan',
+        'kode_mak',
+        'detail_alokasi_anggaran',
+        'nilai_pencairan', // di input oleh keuangan (ibu ning)
         'kelengkapan_laporan_std',
         'tembusan_std',
         'pimpinan_ttd',

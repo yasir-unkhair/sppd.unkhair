@@ -17,6 +17,7 @@ class Edit extends Component
 
     public $stugas_id, $departemen_id, $departemen, $kegiatan_std, $tanggal_mulai_tugas, $tanggal_selesai_tugas;
     public $keterangan, $pimpinan_ttd, $pimpinan_id, $status_std;
+    public $kode_mak, $detail_alokasi_anggaran;
 
     public $kelengkapan_laporan_std = [], $tembusan_std = [];
 
@@ -52,6 +53,9 @@ class Edit extends Component
         $this->tanggal_mulai_tugas = $get->tanggal_mulai_tugas;
         $this->tanggal_selesai_tugas = $get->tanggal_selesai_tugas;
         $this->keterangan = $get->keterangan;
+
+        $this->kode_mak = $get->kode_mak;
+        $this->detail_alokasi_anggaran = $get->detail_alokasi_anggaran;
 
         $get_kelengkapan_laporan_std = json_decode($get->kelengkapan_laporan_std, true);
         $get_tembusan_std = json_decode($get->tembusan_std, true);
@@ -191,6 +195,10 @@ class Edit extends Component
             'pimpinan_ttd' => json_encode($pimpinan_ttd),
             'pimpinan_id' => $this->pimpinan_id,
             'keterangan' => $this->keterangan,
+
+            'kode_mak' => $this->kode_mak,
+            'detail_alokasi_anggaran' => $this->detail_alokasi_anggaran,
+
             'kelengkapan_laporan_std' => $kelengkapan_laporan_std ? json_encode($kelengkapan_laporan_std) : NULL,
             'tembusan_std' => $tembusan_std ? json_encode($tembusan_std) : NULL,
             'status_std' => $this->status_std,

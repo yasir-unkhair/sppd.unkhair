@@ -136,7 +136,7 @@
         @if (auth()->user()->hasRole('admin-st') || in_array(session('role'), ['admin-st']))
             <li class="nav-item">
                 <a href="{{ route('admin.std.index') }}"
-                    class="nav-link {{ routeIs(['admin.std.index', 'admin.std.create', 'admin.std.fromSppd', 'admin.std.edit']) ? 'active' : '' }}">
+                    class="nav-link {{ routeIs(['admin.std.index', 'admin.std.create', 'admin.std.fromSppd', 'admin.std.edit', 'admin.std.lengkapi']) ? 'active' : '' }}">
                     <i class="nav-icon fas fa-newspaper-o"></i>
                     <p>Data STD</p>
                 </a>

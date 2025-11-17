@@ -42,66 +42,74 @@
                                                 <li class="list-group-item p-0">
                                                     {{ $r->nama_pegawai }}
                                                 </li>
-                                            @break
-                                        @endif
+                                                @break
+                                            @endif
+                                            <li class="list-group-item p-0">
+                                                {{ $loop->index + 1 }}. {{ $r->nama_pegawai }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-right warna-warning">Departemen/Unit :</td>
+                                <td>{{ $get->departemen->departemen }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right warna-warning">Tanggal Dinas :</td>
+                                <td>
+                                    <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-0">
-                                            {{ $loop->index + 1 }}. {{ $r->nama_pegawai }}
+                                            <b>Dimulai: &nbsp;</b> {{ tgl_indo($get->tanggal_mulai_tugas, false) }}
                                         </li>
-                                    @endforeach
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-right warna-warning">Departemen/Unit :</td>
-                            <td>{{ $get->departemen->departemen }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right warna-warning">Tanggal Dinas :</td>
-                            <td>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item p-0">
-                                        <b>Dimulai: &nbsp;</b> {{ tgl_indo($get->tanggal_mulai_tugas, false) }}
-                                    </li>
-                                    <li class="list-group-item p-0">
-                                        <b>Selesai: &nbsp;</b>{{ tgl_indo($get->tanggal_selesai_tugas, false) }}
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-right warna-warning">Ttd. Pimpinan :</td>
-                            <td>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item p-0">
-                                        {{ get_datajson($get->pimpinan_ttd, 'nama_pimpinan') }}
-                                    </li>
-                                    <li class="list-group-item p-0">
-                                        <b>Jabatan:
-                                            &nbsp;</b>{{ get_datajson($get->pimpinan_ttd, 'detail_jabatan') }}
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-right warna-info">Diverifikasi Oleh :</td>
-                            <td>
-                                {{ $get->reviwer?->name ?? '-' }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-right warna-info">Tanggal Verifikasi :</td>
-                            <td>
-                                {{ tgl_indo($get->tanggal_review ?? '') }}
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            @endif
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary btn-sm" wire:click="_reset"><i class="fa fa-times"></i>
-                Close</button>
+                                        <li class="list-group-item p-0">
+                                            <b>Selesai: &nbsp;</b>{{ tgl_indo($get->tanggal_selesai_tugas, false) }}
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-right warna-warning">Ttd. Pimpinan :</td>
+                                <td>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item p-0">
+                                            {{ get_datajson($get->pimpinan_ttd, 'nama_pimpinan') }}
+                                        </li>
+                                        <li class="list-group-item p-0">
+                                            <b>Jabatan:
+                                                &nbsp;</b>{{ get_datajson($get->pimpinan_ttd, 'detail_jabatan') }}
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-right warna-warning">Kode MAK :</td>
+                                <td>{{ $get->kode_mak ?? '' }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right warna-warning">Detail Alokasi Anggaran :</td>
+                                <td>{{ $get->detail_alokasi_anggaran ?? '' }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-right warna-info">Diverifikasi Oleh :</td>
+                                <td>
+                                    {{ $get->reviwer?->name ?? '-' }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-right warna-info">Tanggal Verifikasi :</td>
+                                <td>
+                                    {{ tgl_indo($get->tanggal_review ?? '') }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                @endif
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" wire:click="_reset"><i class="fa fa-times"></i>
+                    Close</button>
+            </div>
         </div>
     </div>
-</div>
 </div>
