@@ -69,8 +69,8 @@ class StdController extends Controller
                     if (!empty($request->input('search.value'))) {
                         $instance->where(function ($w) use ($request) {
                             $search = $request->input('search.value');
-                            $w->orWhere('app_surat_perjalanan_dinas.nomor_std', 'LIKE', "%$search%")
-                                ->orWhere('app_surat_perjalanan_dinas.kegiatan_std', 'LIKE', "%$search%");
+                            $w->orWhere('app_surat_tugas_dinas.nomor_std', 'LIKE', "%$search%")
+                                ->orWhere('app_surat_tugas_dinas.kegiatan_std', 'LIKE', "%$search%");
                         });
                     }
                 })
