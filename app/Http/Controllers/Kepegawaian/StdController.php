@@ -114,6 +114,8 @@ class StdController extends Controller
                             $w->where('app_pegawai.nama_pegawai', 'LIKE', "%$search%");
                         });
                     }
+
+                    $instance->where('app_surat_tugas_dinas.std_dk', 1);
                 })
                 ->rawColumns(['nomor_std', 'tanggal_berangakat', 'pegawai', 'departemen'])
                 ->make(true);

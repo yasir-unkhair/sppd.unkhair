@@ -102,7 +102,8 @@ class DashboardController extends Controller
                 },
                 'std AS jml_std' => function (Builder $query) {
                     $query->whereYear('created_at', tahun())
-                        ->where('status_std', '200');
+                        ->where('status_std', '200')
+                        ->where('std_dk', 1);
                 }
             ])->orderBy('nama_pegawai', 'ASC');
             return DataTables::eloquent($listdata)
