@@ -75,8 +75,14 @@ class Login extends Component
                     'role' => $role,
                     'tahun' => $this->tahun
                 ]);
+
                 alert()->success('Success', 'Berhasil Login, Selamat datang ' . $login->name);
-                return $this->redirect(route($role . '.dashboard'));
+
+                if (in_array($role, ['keuangan', 'kepegawaian'])) {
+                    return $this->redirect(route($role . '.dashboard'));
+                }
+
+                return $this->redirect(route('admin.dashboard'));
             } else {
                 session()->put([
                     'role' => NULL,
