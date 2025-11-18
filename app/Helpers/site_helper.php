@@ -157,6 +157,7 @@ if (!function_exists('str_role')) {
             'ppk' => 'PPK',
             'review-st' => 'Review STD',
             'keuangan' => 'Keuangan',
+            'kepegawaian' => 'Kepegawaian',
         ];
 
         if ($roles && array_key_exists($key, $roles)) {

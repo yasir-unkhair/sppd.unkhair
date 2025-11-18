@@ -167,6 +167,35 @@
                     </div>
 
                     <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="judul_konten">
+                                    Kode MAK :
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" wire:model="kode_mak"
+                                        placeholder="Kode MAK">
+                                </div>
+                                @error('kode_mak')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-md-9">
+                                <label for="judul_konten">
+                                    Detail Alokasi Anggaran :
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" wire:model="detail_alokasi_anggaran"
+                                        placeholder="Detail Alokasi Anggaran">
+                                </div>
+                                @error('detail_alokasi_anggaran')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="judul_konten">
                             Keterangan Lainnya :
                         </label>

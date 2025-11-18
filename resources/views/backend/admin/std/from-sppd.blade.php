@@ -47,74 +47,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($results as $row)
-                                        <tr>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            <td>
-                                                @php
-                                                    $str = '<ul class="list-group list-group-flush">';
-                                                    $str .=
-                                                        '<li class="list-group-item p-0">' .
-                                                        Str::limit($row->kegiatan_std, 60, ' ...') .
-                                                        '</li>';
-                                                    $str .=
-                                                        '<li class="list-group-item p-0">Nomor: ' .
-                                                        $row->nomor_std .
-                                                        '</li>';
-                                                    $str .= '</ul>';
-                                                    echo $str;
-                                                @endphp
-                                            </td>
-                                            <td>{{ str_tanggal_dinas($row->tanggal_mulai_tugas, $row->tanggal_selesai_tugas) }}
-                                            </td>
-                                            <td>
-                                                @php
-                                                    $str = '<ul class="list-group list-group-flush">';
-                                                    foreach ($row->pegawai as $index => $r) {
-                                                        if (count($row->pegawai) == 1) {
-                                                            $str .=
-                                                                '<li class="list-group-item p-0">' .
-                                                                $r->nama_pegawai .
-                                                                '</li>';
-                                                            break;
-                                                        }
-
-                                                        $nomor = $index + 1;
-                                                        if ($nomor <= 3) {
-                                                            $str .=
-                                                                '<li class="list-group-item p-0">' .
-                                                                $nomor .
-                                                                '. ' .
-                                                                $r->nama_pegawai .
-                                                                '</li>';
-                                                        } else {
-                                                            $str .=
-                                                                '<li class="list-group-item p-0 text-muted">&nbsp;... </li>';
-                                                            break;
-                                                        }
-                                                    }
-                                                    $str .= '</ul>';
-                                                    echo $str;
-                                                @endphp
-                                            </td>
-                                            <td>{{ tgl_indo($row->created_at) }}</td>
-                                            <td>
-                                                @php
-                                                    $edit = "lengkapi('" . encode_arr(['stugas_id' => $row->id]) . "')";
-                                                    $actionBtn =
-                                                        '
-                    <center>
-                        <button type="button" onclick="' .
-                                                        $edit .
-                                                        '" class="btn btn-sm btn-success"><i class="fa fa-pencil"></i> Lengkapi</button>
-                    </center>';
-                                                    echo $actionBtn;
-                                                @endphp
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>

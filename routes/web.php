@@ -52,7 +52,7 @@ Route::group(['middleware' => 'isLogin'], function () {
             Route::get('/dashboard/statistik-pegawai', 'get_statistik_usulan_pegawai')->name('admin.dashboard.satistik-pegawai');
         });
 
-        Route::group(['middleware' => ['role:developper|admin-spd|admin-st|admin-st-dk|ppk|review-st']], function () {
+        Route::group(['middleware' => ['role:developper|admin-spd|admin-st|admin-st-dk|ppk|review-st|kepegawaian']], function () {
             Route::controller(App\Http\Controllers\Admin\DepartemenController::class)->group(function () {
                 Route::get('/departemen/index', 'index')->name('admin.departemen.index');
                 Route::get('/departemen/unitkhusus/{params}', 'unitkhusus')->name('admin.departemen.unitkhusus');
@@ -122,6 +122,21 @@ Route::group(['middleware' => 'isLogin'], function () {
             });
             Route::controller(App\Http\Controllers\Keuangan\StdController::class)->group(function () {
                 Route::get('/std/index', 'index')->name('keuangan.std.index');
+            });
+        });
+    });
+
+    // route kepegawaian
+    Route::prefix('kepegawaian/')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\Kepegawaian\DashboardController::class, 'index'])->name('kepegawaian.dashboard');
+        Route::group(['middleware' => ['role:kepegawaian']], function () {
+            Route::controller(App\Http\Controllers\Kepegawaian\SppdController::class)->group(function () {
+                Route::get('/sppd/index', 'index')->name('kepegawaian.sppd.index');
+                Route::get('/sppd/export/excel', 'excel')->name('kepegawaian.sppd.export.excel');
+            });
+            Route::controller(App\Http\Controllers\Kepegawaian\StdController::class)->group(function () {
+                Route::get('/std/index', 'index')->name('kepegawaian.std.index');
+                Route::get('/std/export/excel', 'excel')->name('kepegawaian.std.export.excel');
             });
         });
     });

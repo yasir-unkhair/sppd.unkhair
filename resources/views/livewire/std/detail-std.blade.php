@@ -82,14 +82,18 @@
                                     </ul>
                                 </td>
                             </tr>
-                            <tr>
-                                <th class="text-right warna-warning">Kode MAK :</td>
-                                <td>{{ $get->kode_mak ?? '' }}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-right warna-warning">Detail Alokasi Anggaran :</td>
-                                <td>{{ $get->detail_alokasi_anggaran ?? '' }}</td>
-                            </tr>
+
+                            @if ($get->std_dk)
+                                <tr>
+                                    <th class="text-right warna-warning">Kode MAK :</td>
+                                    <td>{{ $get->kode_mak ?? '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right warna-warning">Detail Alokasi Anggaran :</td>
+                                    <td>{{ $get->detail_alokasi_anggaran ?? '' }}</td>
+                                </tr>
+                            @endif
+
                             <tr>
                                 <th class="text-right warna-info">Diverifikasi Oleh :</td>
                                 <td>

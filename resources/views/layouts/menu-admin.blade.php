@@ -133,7 +133,7 @@
             </li>
         @endif
 
-        @if (auth()->user()->hasRole('admin-st') || in_array(session('role'), ['admin-st']))
+        @if (auth()->user()->hasRole('admin-st') && in_array(session('role'), ['admin-st']))
             <li class="nav-item">
                 <a href="{{ route('admin.std.index') }}"
                     class="nav-link {{ routeIs(['admin.std.index', 'admin.std.create', 'admin.std.fromSppd', 'admin.std.edit', 'admin.std.lengkapi']) ? 'active' : '' }}">
@@ -212,6 +212,39 @@
                 class="nav-link {{ routeIs(['keuangan.std.index']) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-newspaper-o"></i>
                 <p>Data STD</p>
+            </a>
+        </li>
+
+        {{-- <li class="nav-item">
+            <a href="" class="nav-link {{ routeIs(['']) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-book"></i>
+                <p>Laporan</p>
+            </a>
+        </li> --}}
+    @endif
+
+    @if (auth()->user()->hasRole(['kepegawaian']) && in_array(session('role'), ['kepegawaian']))
+        <li class="nav-item {{ routeIs('kepegawaian.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('kepegawaian.dashboard') }}"
+                class="nav-link {{ routeIs('kepegawaian.dashboard') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p> Dashboard</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('kepegawaian.sppd.index') }}"
+                class="nav-link {{ routeIs(['kepegawaian.sppd.index']) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-newspaper-o"></i>
+                <p>Laporan SPPD</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('kepegawaian.std.index') }}"
+                class="nav-link {{ routeIs(['kepegawaian.std.index']) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-newspaper-o"></i>
+                <p>Laporan STD</p>
             </a>
         </li>
 

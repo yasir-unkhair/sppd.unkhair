@@ -18,7 +18,6 @@ class LengkapiStd extends Component
     public $stugas_id, $departemen_id, $departemen, $kegiatan_std, $tanggal_mulai_tugas, $tanggal_selesai_tugas;
     public $keterangan, $pimpinan_ttd, $pimpinan_id, $status_std;
 
-    public $kode_mak, $detail_alokasi_anggaran;
 
     public $kelengkapan_laporan_std = [], $tembusan_std = [];
 
@@ -179,9 +178,6 @@ class LengkapiStd extends Component
             'tanggal_selesai_tugas' => $this->tanggal_selesai_tugas,
             'pimpinan_ttd' => json_encode($pimpinan_ttd),
             'pimpinan_id' => $this->pimpinan_id,
-
-            'kode_mak' => $this->kode_mak,
-            'detail_alokasi_anggaran' => $this->detail_alokasi_anggaran,
 
             'keterangan' => $this->keterangan,
             'kelengkapan_laporan_std' => json_encode($kelengkapan_laporan_std),

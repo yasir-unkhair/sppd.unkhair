@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Keuangan;
+namespace App\Http\Controllers\Kepegawaian;
 
+use App\Exports\StdExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SuratTugasDinas;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StdController extends Controller
 {
     //
     public function __construct()
     {
-        $this->middleware(['role:keuangan']);
+        $this->middleware(['role:kepegawaian']);
     }
 
     public function index(Request $request)
@@ -24,31 +27,23 @@ class StdController extends Controller
             $listdata = SuratTugasDinas::with(['pegawai'])->dalam_kota($std_dk)->status_std(['200'])->tahun(tahun())
                 ->select([
                     'app_surat_tugas_dinas.id',
-                    DB::raw("SUBSTRING_INDEX(app_surat_tugas_dinas.nomor_std, '/', 1) AS nomor"),
                     'app_surat_tugas_dinas.nomor_std',
                     'app_surat_tugas_dinas.kegiatan_std',
+                    'app_surat_tugas_dinas.tanggal_std',
                     'app_surat_tugas_dinas.tanggal_mulai_tugas',
                     'app_surat_tugas_dinas.tanggal_selesai_tugas',
-                    'app_surat_tugas_dinas.nilai_pencairan',
-                    'app_surat_tugas_dinas.status_std',
+                    'app_surat_tugas_dinas.departemen_id'
                 ])
-                ->orderBy('nomor', 'DESC')
-                ->orderBy('app_surat_tugas_dinas.tanggal_std', 'DESC');
+                ->orderBy('app_surat_tugas_dinas.tanggal_std', 'DESC')
+                ->orderBy('app_surat_tugas_dinas.departemen_id', 'ASC');
+
             return DataTables::of($listdata)
                 ->addIndexColumn()
-                ->editColumn('action', function ($row) {
-                    $onclick = "input_np('" . encode_arr(['std_id' => $row->id]) . "')";
-                    $warna_btn = $row->nilai_pencairan ? 'btn-warning' : 'btn-primary';
-                    $actionBtn = '
-                    <center>
-                        <button type="button" onclick="' . $onclick . '" class="btn btn-sm ' . $warna_btn . '"><i class="fa fa-pencil"></i> Nilai Pencairan</button>
-                    </center>';
-                    return $actionBtn;
-                })
                 ->editColumn('nomor_std', function ($row) {
+                    $detail = "detail('" . encode_arr(['stugas_id' => $row->id]) . "')";
                     $str = '<ul class="list-group list-group-flush">';
-                    $str .= '<li class="list-group-item p-0">' . (Str::limit($row->kegiatan_std, 50, '...')) . '</li>';
-                    $str .= '<li class="list-group-item p-0"><span class="text-primary">' . $row->nomor_std . '</span></li>';
+                    $str .= '<li class="list-group-item p-0">' . (Str::limit($row->kegiatan_std, 70, '...')) . '</li>';
+                    $str .= '<li class="list-group-item p-0"><a href="#" onclick="' . $detail . '" class="">' . $row->nomor_std . '</a></li>';
                     $str .= '</ul>';
                     return $str;
                 })
@@ -86,38 +81,81 @@ class StdController extends Controller
                     }
                     return  $str;
                 })
-                ->editColumn('nilai_pencairan', function ($row) {
-                    return 'Rp.' . (empty($row->nilai_pencairan) ? '0' : rupiah($row->nilai_pencairan));
+                ->editColumn('departemen', function ($row) {
+                    return $row->departemen->departemen ?? '-';
                 })
                 ->filter(function ($instance) use ($request) {
+                    $filter = false;
+                    if ($request->get('tanggal_awal') && $request->get('tanggal_akhir')) {
+                        $tgl_mulai = Carbon::parse($request->get('tanggal_awal'))->format('Y-m-d');
+                        $tgl_akhir = Carbon::parse($request->get('tanggal_akhir'))->format('Y-m-d');
+                        $instance->whereBetween('app_surat_tugas_dinas.tanggal_std', [$tgl_mulai, $tgl_akhir]);
+                        $filter = true;
+                    }
+
+                    if ($request->get('departemen_id')) {
+                        $instance->where('app_surat_tugas_dinas.departemen_id', '=', $request->get('departemen_id'));
+                        $filter = true;
+                    }
+
+                    if (!$filter) {
+                        $instance->where('app_surat_tugas_dinas.nomor_std', '=', '-');
+                    }
+
                     if (!empty($request->input('search.value'))) {
                         $instance->where(function ($w) use ($request) {
                             $search = $request->input('search.value');
                             $w->orWhere('app_surat_tugas_dinas.nomor_std', 'LIKE', "%$search%")
                                 ->orWhere('app_surat_tugas_dinas.kegiatan_std', 'LIKE', "%$search%");
                         });
+
+                        $instance->orWhereHas('pegawai', function ($w) use ($request) {
+                            $search = $request->input('search.value');
+                            $w->where('app_pegawai.nama_pegawai', 'LIKE', "%$search%");
+                        });
                     }
                 })
-                ->rawColumns(['nomor_std', 'tanggal_berangakat', 'pegawai', 'nilai_pencairan', 'action'])
+                ->rawColumns(['nomor_std', 'tanggal_berangakat', 'pegawai', 'departemen'])
                 ->make(true);
         }
 
         $data = [
-            'judul' => 'Daftar STD',
-            'datatable' => [
-                'url' => route('keuangan.std.index'),
+            'judul' => 'Laporan STD',
+            'datatable2' => [
+                'url' => route('kepegawaian.std.index'),
                 'id_table' => 'id-datatable',
                 'columns' => [
                     ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'orderable' => 'false', 'searchable' => 'false'],
                     ['data' => 'nomor_std', 'name' => 'nomor_std', 'orderable' => 'false', 'searchable' => 'true'],
                     ['data' => 'tanggal_berangakat', 'name' => 'tanggal_berangakat', 'orderable' => 'false', 'searchable' => 'false'],
                     ['data' => 'pegawai', 'name' => 'pegawai', 'orderable' => 'false', 'searchable' => 'false'],
-                    ['data' => 'nilai_pencairan', 'name' => 'nilai_pencairan', 'orderable' => 'false', 'searchable' => 'false'],
-                    ['data' => 'action', 'name' => 'action', 'orderable' => 'false', 'searchable' => 'false']
+                    ['data' => 'departemen', 'name' => 'departemen', 'orderable' => 'false', 'searchable' => 'false']
                 ]
             ]
         ];
 
-        return view('backend.keuangan.std-index', $data);
+        return view('backend.kepegawaian.std-index', $data);
+    }
+
+    public function excel(Request $request)
+    {
+        if (!trim($request->date)) {
+            abort(500);
+        }
+        if (trim($request->date) == 'to') {
+            abort(500);
+        }
+
+        $tanggal = explode('to', $request->date);
+        $departemen_id = $request->departemen_id;
+
+        $nama_file = time() . ' - Export STD.xlsx';
+        $params = [
+            'tgl_mulai' => trim($tanggal[0]),
+            'tgl_akhir' => trim($tanggal[1]),
+            'departemen_id' => $departemen_id
+        ];
+
+        return Excel::download(new StdExport($params), $nama_file);
     }
 }

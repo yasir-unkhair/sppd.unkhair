@@ -37,7 +37,7 @@
                             </button>
                         @endif
 
-                        @if (auth()->user()->hasRole(['admin-st']))
+                        @if (auth()->user()->hasRole(['admin-st']) && in_array(session('role'), ['admin-st']))
                             <button class="btn btn-sm btn-danger"
                                 onclick="location.href='{{ route('admin.std.fromSppd') }}'">
                                 <i class="fa fa-list"></i> STD Dari SPPD
@@ -64,99 +64,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($results as $row)
-                                        <tr>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            <td>
-                                                @php
-                                                    $detail = "detail('" . encode_arr(['stugas_id' => $row->id]) . "')";
-                                                    $str = '<ul class="list-group list-group-flush">';
-                                                    $str .=
-                                                        '<li class="list-group-item p-0">' .
-                                                        Str::limit($row->kegiatan_std, 50, ' ...') .
-                                                        '</li>';
-                                                    $str .=
-                                                        '<li class="list-group-item p-0"><a href="#" onclick="' .
-                                                        $detail .
-                                                        '" class="">' .
-                                                        $row->nomor_std .
-                                                        '</a></li>';
-                                                    $str .= '</ul>';
-                                                    echo $str;
-                                                @endphp
-                                            </td>
-                                            <td>{{ tgl_indo($row->tanggal_std, false) }}</td>
-                                            <td>
-                                                @php
-                                                    $str = '<ul class="list-group list-group-flush">';
-                                                    foreach ($row->pegawai as $index => $r) {
-                                                        if (count($row->pegawai) == 1) {
-                                                            $str .=
-                                                                '<li class="list-group-item p-0">' .
-                                                                $r->nama_pegawai .
-                                                                '</li>';
-                                                            break;
-                                                        }
-
-                                                        $nomor = $index + 1;
-                                                        if ($nomor <= 3) {
-                                                            $str .=
-                                                                '<li class="list-group-item p-0">' .
-                                                                $nomor .
-                                                                '. ' .
-                                                                $r->nama_pegawai .
-                                                                '</li>';
-                                                        } else {
-                                                            $str .=
-                                                                '<li class="list-group-item p-0 text-muted">&nbsp;... </li>';
-                                                            break;
-                                                        }
-                                                    }
-                                                    $str .= '</ul>';
-                                                    echo $str;
-                                                @endphp
-                                            </td>
-                                            <td>{{ $row->departemen->departemen ?? '-' }}</td>
-                                            <td>{!! str_status_std($row->status_std) !!}</td>
-                                            <td>
-                                                @php
-                                                    $edit = "edit('" . encode_arr(['stugas_id' => $row->id]) . "')";
-                                                    $detail = "detail('" . encode_arr(['stugas_id' => $row->id]) . "')";
-                                                    $confirm = "return confirm('Apakah Anda Yakin Menghapus Data?');";
-
-                                                    $btnPrint = '';
-                                                    if ($row->status_std == '200') {
-                                                        $btnPrint =
-                                                            '<a href="' .
-                                                            route('cetak.std', encode_arr(['stugas_id' => $row->id])) .
-                                                            '" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-print"></i></a>';
-                                                    }
-
-                                                    $actionBtn =
-                                                        '    
-                                                        <button type="button" onclick="' .
-                                                        $detail .
-                                                        '" class="btn btn-sm btn-info"><i class="fa fa-info-circle"></i></button>
-                                                        <button type="button" onclick="' .
-                                                        $edit .
-                                                        '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
-                                                        ' .
-                                                        $btnPrint .
-                                                        '
-                                                        <!--
-                                                        <a href="' .
-                                                        route('admin.std.delete', encode_arr(['std_id' => $row->id])) .
-                                                        '" onclick="' .
-                                                        $confirm .
-                                                        '" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
-                                                        -->';
-                                                    echo $actionBtn;
-                                                @endphp
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
