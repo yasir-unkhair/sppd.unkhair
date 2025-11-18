@@ -31,7 +31,7 @@ class Pengguna extends Component
         if ($this->pencarian) {
             $this->resetPage();
         }
-        $listuser = User::role(['admin-spd', 'admin-st', 'ppk', 'keuangan', 'review-st', 'admin-st-dk'])->pencarian($this->pencarian)->orderBy('created_at', 'ASC')->paginate($this->perPage);
+        $listuser = User::role(['admin-spd', 'admin-st', 'ppk', 'keuangan', 'review-st', 'admin-st-dk', 'kepegawaian'])->pencarian($this->pencarian)->orderBy('created_at', 'ASC')->paginate($this->perPage);
         return view('livewire.sistem.pengguna-index', ['listdata' => $listuser])
             ->extends('layouts.backend')
             ->section('content');
