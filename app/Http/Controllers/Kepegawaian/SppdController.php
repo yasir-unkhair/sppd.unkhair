@@ -83,6 +83,8 @@ class SppdController extends Controller
                             $w->where('app_pegawai.nama_pegawai', 'LIKE', "%$search%");
                         });
                     }
+
+                    $instance->where('app_surat_perjalanan_dinas.status_spd', '=', '200');
                 })
                 ->rawColumns(['nomor_spd', 'tanggal_berangakat', 'pegawai', 'departemen'])
                 ->make(true);

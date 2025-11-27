@@ -46,6 +46,8 @@ class SppdExport implements FromView
             $listsppd->where('app_surat_perjalanan_dinas.departemen_id', '=', $this->departemen_id);
         }
 
+        $listsppd->where('app_surat_perjalanan_dinas.status_spd', '=', '200');
+
         $listsppd->orderBy('app_surat_perjalanan_dinas.tanggal_spd', 'DESC');
         $listsppd->orderBy('app_surat_perjalanan_dinas.departemen_id', 'ASC');
 

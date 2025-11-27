@@ -116,6 +116,7 @@ class StdController extends Controller
                     }
 
                     $instance->where('app_surat_tugas_dinas.std_dk', 1);
+                    $instance->where('app_surat_tugas_dinas.status_std', '=', '200');
                 })
                 ->rawColumns(['nomor_std', 'tanggal_berangakat', 'pegawai', 'departemen'])
                 ->make(true);

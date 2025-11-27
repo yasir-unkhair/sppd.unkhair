@@ -40,6 +40,7 @@ class StdExport implements FromView
         if ($this->departemen_id) {
             $liststd->where('app_surat_tugas_dinas.departemen_id', '=', $this->departemen_id);
         }
+        $liststd->where('app_surat_tugas_dinas.status_std', '=', '200');
 
         $liststd->orderBy('app_surat_tugas_dinas.tanggal_std', 'DESC');
         $liststd->orderBy('app_surat_tugas_dinas.departemen_id', 'ASC');
