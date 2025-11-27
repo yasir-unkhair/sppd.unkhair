@@ -184,7 +184,7 @@
                             params += 'departemen_id=' + departemen_id;
                         }
 
-                        var export_excel = "{{ route('admin.sppd.laporan.export.excel') }}?" + params;
+                        var export_excel = "{{ route('kepegawaian.sppd.export.excel') }}?" + params;
                         //alert(export_excel);
                         $('#export-excel').attr("href", export_excel).removeClass("disabled");
                     });
