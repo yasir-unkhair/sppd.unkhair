@@ -19,6 +19,8 @@ class Create extends Component
     public $lama_pd = 1, $tanggal_berangakat, $tanggal_kembali, $keterangan, $pejabat_ppk, $status_spd;
     public $kode_mak, $detail_alokasi_anggaran;
 
+    public $sumber_dana, $instansi = "Dipa Universitas Khairun";
+
     public $tanggal_spd;
 
     public $mode = "add";
@@ -155,6 +157,8 @@ class Create extends Component
             'kode_mak' => $this->kode_mak,
             'tanggal_spd' => $this->tanggal_spd,
             'detail_alokasi_anggaran' => $this->detail_alokasi_anggaran,
+            'sumber_dana' => $this->sumber_dana,
+            'instansi' => $this->instansi,
             'status_spd' => '102', // 102 status spd baru di diajukan ke ppk
         ]);
 
@@ -207,6 +211,9 @@ class Create extends Component
 
         $this->nomor_surat = "";
         $this->kode_surat = "";
+
+        $this->sumber_dana = "";
+        $this->instansi = "";
 
         $this->readonly = "readonly";
 

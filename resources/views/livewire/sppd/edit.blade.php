@@ -243,6 +243,31 @@
 
                     <div class="form-group">
                         <label for="judul_konten">
+                            Instansi :
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" wire:model="instansi" placeholder="Instansi">
+                        </div>
+                        @error('instansi')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="judul_konten">
+                            Sumber Dana :
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" wire:model="sumber_dana"
+                                placeholder="Sumber Dana">
+                        </div>
+                        @error('sumber_dana')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="judul_konten">
                             Keterangan Lainnya :
                         </label>
                         <div class="input-group">

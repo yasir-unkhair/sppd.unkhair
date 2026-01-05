@@ -19,6 +19,8 @@ class Edit extends Component
     public $lama_pd = 1, $tanggal_berangakat, $tanggal_kembali, $keterangan, $pejabat_ppk, $status_spd;
     public $kode_mak, $detail_alokasi_anggaran;
 
+    public $sumber_dana, $instansi;
+
     public $tanggal_spd;
 
     public $readonly = "readonly";
@@ -50,6 +52,9 @@ class Edit extends Component
         $this->keterangan = $get->keterangan;
         $this->kode_mak = $get->kode_mak;
         $this->detail_alokasi_anggaran = $get->detail_alokasi_anggaran;
+
+        $this->sumber_dana = $get->sumber_dana;
+        $this->instansi = $get->instansi;
 
         $this->nama_pegawai = $get->pegawai->nama_pegawai;
         $this->departemen = $get->departemen->departemen;
@@ -176,6 +181,8 @@ class Edit extends Component
             'keterangan' => $this->keterangan,
             'kode_mak' => $this->kode_mak,
             'detail_alokasi_anggaran' => $this->detail_alokasi_anggaran,
+            'sumber_dana' => $this->sumber_dana,
+            'instansi' => $this->instansi,
         ]);
 
         $this->simpan_riwayat_nomor_surat($this->sppd_id);

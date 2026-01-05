@@ -181,12 +181,12 @@
                 <td class="kolom">
                     Pembebanan Anggaran <br>
                     a. Instansi <br>
-                    b. Akun
+                    b. Sumber Dana
                 </td>
                 <td class="kolom" colspan="2">
                     <br>
-                    a. <br>
-                    b.
+                    a. {{ $sppd->instansi ?? '' }}<br>
+                    b. {{ $sppd->sumber_dana ?? '' }}
                 </td>
             </tr>
             <tr>
