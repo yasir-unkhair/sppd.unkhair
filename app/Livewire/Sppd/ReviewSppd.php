@@ -93,6 +93,7 @@ class ReviewSppd extends Component
             'status_std' => '206', // kode STD belum lengkap
         ];
 
+        //$std = SuratTugasDinas::create($values);
         $std = SuratTugasDinas::updateOrCreate(
             ['spd_id' => $this->params['sppd_id']],
             $values

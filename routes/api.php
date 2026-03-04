@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'verifyApiKey'], function () {
+    Route::controller(App\Http\Controllers\Api\SpdController::class)->group(function () {
+        Route::post('/sppd', 'index')->name('api.sppd.index');
+    });
+
+    Route::controller(App\Http\Controllers\Api\StdController::class)->group(function () {
+        Route::post('/std', 'index')->name('api.std.index');
+    });
 });
