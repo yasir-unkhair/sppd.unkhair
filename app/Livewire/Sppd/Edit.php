@@ -30,6 +30,10 @@ class Edit extends Component
     public $riwayat_nomor_surat = [];
 
 
+    public $tamu = 0;
+    public $ppk_tamu, $nip_ppk;
+
+
     public function mount($params)
     {
         $this->sppd_id = data_params($params, 'sppd_id');
@@ -58,6 +62,10 @@ class Edit extends Component
 
         $this->nama_pegawai = $get->pegawai->nama_pegawai;
         $this->departemen = $get->departemen->departemen;
+
+        $this->tamu = $get->tamu;
+        $this->ppk_tamu = $this->tamu ? get_datajson($get->ppk_tamu, 'ppk_tamu') : '';
+        $this->nip_ppk = $this->tamu ? get_datajson($get->ppk_tamu, 'nip_ppk') : '';
     }
 
     public function render()
@@ -116,7 +124,7 @@ class Edit extends Component
     {
         // abort(403);
 
-        $this->validate([
+        $rules = [
             'nomor_surat' => 'required|numeric|regex:/^[0-9]+$/',
             'kode_surat' => 'required',
             'nomor_spd' => 'required|unique:app_surat_perjalanan_dinas,nomor_spd,' . $this->sppd_id,
@@ -131,7 +139,12 @@ class Edit extends Component
             'tanggal_kembali' => 'required',
             'kode_mak' => 'required',
             'tanggal_spd' => 'required',
-        ]);
+        ];
+
+        if ($this->tamu == 1) {
+            $rules += ['ppk_tamu' => 'required'];
+        }
+        $this->validate($rules);
 
         // edit sppd jika std sudah terbit maka akan terupdate otomatis
         $std = SuratTugasDinas::where('spd_id', $this->sppd_id)->first();
@@ -183,6 +196,9 @@ class Edit extends Component
             'detail_alokasi_anggaran' => $this->detail_alokasi_anggaran,
             'sumber_dana' => $this->sumber_dana,
             'instansi' => $this->instansi,
+
+            'tamu' => $this->tamu,
+            'ppk_tamu' => $this->tamu ? json_encode(['ppk_tamu' => $this->ppk_tamu, 'nip_ppk' => $this->nip_ppk]) : NULL,
         ]);
 
         $this->simpan_riwayat_nomor_surat($this->sppd_id);
