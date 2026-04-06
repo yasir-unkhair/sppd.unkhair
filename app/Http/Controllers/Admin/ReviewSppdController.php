@@ -27,9 +27,10 @@ class ReviewSppdController extends Controller
                     'app_surat_perjalanan_dinas.tujuan',
                     'app_surat_perjalanan_dinas.created_at',
                     'app_surat_perjalanan_dinas.departemen_id',
+                    'app_surat_perjalanan_dinas.tamu',
                     'b.nama_pegawai'
                 ])
-                ->orderBy('app_surat_perjalanan_dinas.tanggal_spd', 'DESC');
+                ->orderBy('app_surat_perjalanan_dinas.created_at', 'DESC');
             return DataTables::eloquent($listdata)
                 ->addIndexColumn()
                 ->editColumn('action', function ($row) {
@@ -49,6 +50,9 @@ class ReviewSppdController extends Controller
                 })
                 ->editColumn('pegawai', function ($row) {
                     $str = $row->nama_pegawai;
+                    if ($row->tamu) {
+                        $str .= ' <sup class="badge badge-warning" style="font-size:9px;">SPPD Tamu</sup>';
+                    }
                     return  $str;
                 })
                 ->editColumn('departemen', function ($row) {

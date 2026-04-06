@@ -31,6 +31,9 @@ class Create extends Component
 
     public $riwayat_nomor_surat = [];
 
+    public $tamu = 0;
+    public $ppk_tamu, $nip_ppk;
+
     public function render()
     {
         if ($this->nomor_surat) {
@@ -120,7 +123,7 @@ class Create extends Component
     public function save()
     {
         // abort(403);
-        $this->validate([
+        $rules = [
             'nomor_surat' => 'required|numeric|regex:/^[0-9]+$/',
             'kode_surat' => 'required',
             // 'nomor_spd' => 'required|unique:app_surat_perjalanan_dinas,nomor_spd',
@@ -139,7 +142,13 @@ class Create extends Component
             'tanggal_kembali' => 'required',
             'kode_mak' => 'required',
             'tanggal_spd' => 'required',
-        ]);
+        ];
+
+        if ($this->tamu == 1) {
+            $rules += ['ppk_tamu' => 'required'];
+        }
+
+        $this->validate($rules);
 
         $sppd = SuratPerjalananDinas::create([
             'user_id' => auth()->user()->id,
@@ -159,7 +168,10 @@ class Create extends Component
             'detail_alokasi_anggaran' => $this->detail_alokasi_anggaran,
             'sumber_dana' => $this->sumber_dana,
             'instansi' => $this->instansi,
-            'status_spd' => '102', // 102 status spd baru di diajukan ke ppk
+            'status_spd' => '102', // 102 status spd baru di diajukan ke ppk,
+
+            'tamu' => $this->tamu,
+            'ppk_tamu' => $this->tamu ? json_encode(['ppk_tamu' => $this->ppk_tamu, 'nip_ppk' => $this->nip_ppk]) : NULL,
         ]);
 
         $sppd_id = $sppd->id->toString();
@@ -219,5 +231,9 @@ class Create extends Component
 
         $this->show_daftar_surat = false;
         $this->riwayat_nomor_surat = [];
+
+        $this->tamu = 0;
+        $this->ppk_tamu = "";
+        $this->nip_ppk = "";
     }
 }

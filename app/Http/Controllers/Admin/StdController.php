@@ -27,7 +27,7 @@ class StdController extends Controller
                 $std_dk = 1;
             }
 
-            $listdata = SuratTugasDinas::with(['departemen', 'pegawai'])->dalam_kota($std_dk)->status_std(['200', '102', '409'])->tahun($tahun)
+            $listdata = SuratTugasDinas::with(['departemen', 'pegawai', 'sppd'])->dalam_kota($std_dk)->status_std(['200', '102', '409'])->tahun($tahun)
                 ->select([
                     'app_surat_tugas_dinas.id',
                     DB::raw("SUBSTRING_INDEX(app_surat_tugas_dinas.nomor_std, '/', 1) AS nomor"),
@@ -36,9 +36,10 @@ class StdController extends Controller
                     'app_surat_tugas_dinas.tanggal_std',
                     'app_surat_tugas_dinas.departemen_id',
                     'app_surat_tugas_dinas.status_std',
+                    'app_surat_tugas_dinas.spd_id',
                 ])
-                ->orderBy('nomor', 'DESC')
-                ->orderBy('app_surat_tugas_dinas.tanggal_std', 'DESC');
+                //->orderBy('nomor', 'DESC')
+                ->orderBy('app_surat_tugas_dinas.created_at', 'DESC');
 
             return DataTables::of($listdata)
                 ->addIndexColumn()
@@ -77,7 +78,7 @@ class StdController extends Controller
                             if (count($row->pegawai) == 1) {
                                 $str .=
                                     '<li class="list-group-item p-0">' .
-                                    $r->nama_pegawai .
+                                    $r->nama_pegawai . ($row->sppd->tamu ? ' <sup class="badge badge-warning" style="font-size:9px;">STD Tamu</sup>' : '') .
                                     '</li>';
                                 break;
                             }
@@ -169,7 +170,7 @@ class StdController extends Controller
         if ($request->ajax()) {
 
             $tahun = tahun();
-            $listdata = SuratTugasDinas::with(['pegawai'])->status_std(['206'])->tahun($tahun)
+            $listdata = SuratTugasDinas::with(['pegawai', 'sppd'])->status_std(['206'])->tahun($tahun)
                 ->select([
                     'app_surat_tugas_dinas.id',
                     DB::raw("SUBSTRING_INDEX(app_surat_tugas_dinas.nomor_std, '/', 1) AS nomor"),
@@ -178,10 +179,11 @@ class StdController extends Controller
                     'app_surat_tugas_dinas.tanggal_std',
                     'app_surat_tugas_dinas.tanggal_mulai_tugas',
                     'app_surat_tugas_dinas.tanggal_selesai_tugas',
+                    'app_surat_tugas_dinas.spd_id',
                     'app_surat_tugas_dinas.created_at',
                 ])
-                ->orderBy('nomor', 'DESC')
-                ->orderBy('app_surat_tugas_dinas.tanggal_std', 'DESC');
+                //->orderBy('nomor', 'DESC')
+                ->orderBy('app_surat_tugas_dinas.created_at', 'DESC');
 
             return DataTables::of($listdata)
                 ->addIndexColumn()
@@ -217,7 +219,7 @@ class StdController extends Controller
                             if (count($row->pegawai) == 1) {
                                 $str .=
                                     '<li class="list-group-item p-0">' .
-                                    $r->nama_pegawai .
+                                    $r->nama_pegawai . ($row->sppd->tamu ? ' <sup class="badge badge-warning" style="font-size:9px;">SPPD Tamu</sup>' : '') .
                                     '</li>';
                                 break;
                             }

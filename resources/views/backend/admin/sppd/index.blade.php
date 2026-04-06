@@ -40,9 +40,9 @@
                                 <thead class="warna-warning">
                                     <tr>
                                         <th>#</th>
-                                        <th class="text-left">Nomor SPPD</th>
-                                        <th class="text-left">Tanggal SPPD</th>
+                                        <th class="text-left">Nomor/Tanggal SPPD</th>
                                         <th class="text-left">Pegawai</th>
+                                        <th class="text-left">Berangkat</th>
                                         <th class="text-left">Tujuan</th>
                                         <th class="text-left">Departemen/Unit</th>
                                         <th class="text-left">Status</th>

@@ -107,6 +107,11 @@ class SuratTugasDinas extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function sppd()
+    {
+        return $this->hasOne(SuratPerjalananDinas::class, 'id', 'spd_id');
+    }
+
     public function pegawai()
     {
         return $this->belongsToMany(Pegawai::class, 'app_surat_tugas_dinas_has_pegawai', 'surat_tugas_dinas_id');

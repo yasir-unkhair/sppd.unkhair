@@ -45,15 +45,17 @@ class SppdController extends Controller
                     DB::raw("SUBSTRING_INDEX(app_surat_perjalanan_dinas.nomor_spd, '/', 1) AS nomor"),
                     'app_surat_perjalanan_dinas.nomor_spd',
                     'app_surat_perjalanan_dinas.tanggal_spd',
+                    'app_surat_perjalanan_dinas.berangakat',
                     'app_surat_perjalanan_dinas.tujuan',
                     'app_surat_perjalanan_dinas.status_spd',
                     'app_surat_perjalanan_dinas.departemen_id',
+                    'app_surat_perjalanan_dinas.tamu',
                     'b.nama_pegawai',
                     'b.nip',
                 ])
                 // ->orderByRaw("FIELD(status_spd , '102', '200', '406') ASC")
-                ->orderBy('nomor', 'DESC')
-                ->orderBy('app_surat_perjalanan_dinas.tanggal_spd', 'DESC');
+                //->orderBy('nomor', 'DESC')
+                ->orderBy('app_surat_perjalanan_dinas.created_at', 'DESC');
             return DataTables::eloquent($listdata)
                 ->addIndexColumn()
                 ->editColumn('action', function ($row) {
@@ -97,13 +99,18 @@ class SppdController extends Controller
                 })
                 ->editColumn('nomor_spd', function ($row) {
                     $detail = "detail('" . encode_arr(['sppd_id' => $row->id]) . "')";
-                    return '<a href="#" onclick="' . $detail . '" class="">' . $row->nomor_spd . '</a>';
-                })
-                ->editColumn('tanggal_berangakat', function ($row) {
-                    return tgl_indo($row->tanggal_spd, false);
+                    $str = '<ul class="list-group list-group-flush">';
+                    $str .= '<li class="list-group-item p-0"><a href="#" onclick="' . $detail . '" class="">' . $row->nomor_spd . '</a></li>';
+                    $str .= '<li class="list-group-item p-0">' . tgl_indo($row->tanggal_spd, false) . '</li>';
+                    $str .= '</ul>';
+                    return $str;
                 })
                 ->editColumn('pegawai', function ($row) {
                     $str = $row->nama_pegawai;
+                    if ($row->tamu) {
+                        $str .= ' <sup class="badge badge-warning" style="font-size:9px;">SPPD Tamu</sup>';
+                    }
+
                     return  $str;
                 })
                 ->editColumn('departemen', function ($row) {
@@ -134,8 +141,8 @@ class SppdController extends Controller
                 'columns' => [
                     ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'orderable' => 'false', 'searchable' => 'false'],
                     ['data' => 'nomor_spd', 'name' => 'nomor_spd', 'orderable' => 'false', 'searchable' => 'true'],
-                    ['data' => 'tanggal_berangakat', 'name' => 'tanggal_berangakat', 'orderable' => 'false', 'searchable' => 'true'],
                     ['data' => 'pegawai', 'name' => 'pegawai', 'orderable' => 'false', 'searchable' => 'true'],
+                    ['data' => 'berangakat', 'name' => 'berangakat', 'orderable' => 'false', 'searchable' => 'false'],
                     ['data' => 'tujuan', 'name' => 'tujuan', 'orderable' => 'false', 'searchable' => 'false'],
                     ['data' => 'departemen', 'name' => 'departemen', 'orderable' => 'false', 'searchable' => 'false'],
                     ['data' => 'status', 'name' => 'status', 'orderable' => 'false', 'searchable' => 'false'],

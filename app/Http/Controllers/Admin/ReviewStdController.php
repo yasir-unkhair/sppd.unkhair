@@ -26,7 +26,7 @@ class ReviewStdController extends Controller
                 $pimpinan_id = $pimpinan->id;
             }
 
-            $listdata = SuratTugasDinas::with(['departemen', 'pegawai'])->tahun($tahun)->status_std(['102', '200'])->pimpinan_id($pimpinan_id)
+            $listdata = SuratTugasDinas::with(['departemen', 'pegawai', 'sppd'])->tahun($tahun)->status_std(['102', '200'])->pimpinan_id($pimpinan_id)
                 ->select([
                     'app_surat_tugas_dinas.id',
                     'app_surat_tugas_dinas.nomor_std',
@@ -36,9 +36,10 @@ class ReviewStdController extends Controller
                     'app_surat_tugas_dinas.tanggal_selesai_tugas',
                     'app_surat_tugas_dinas.departemen_id',
                     'app_surat_tugas_dinas.status_std',
+                    'app_surat_tugas_dinas.spd_id',
                 ])
-                ->orderByRaw("FIELD(status_std , '102', '200') ASC")
-                ->orderBy('app_surat_tugas_dinas.tanggal_std', 'DESC');
+                //->orderByRaw("FIELD(status_std , '102', '200') ASC")
+                ->orderBy('app_surat_tugas_dinas.created_at', 'DESC');
             return DataTables::eloquent($listdata)
                 ->addIndexColumn()
                 ->editColumn('action', function ($row) {
@@ -73,7 +74,7 @@ class ReviewStdController extends Controller
                     $str = '<ul class="list-group list-group-flush">';
                     foreach ($row->pegawai as $index => $r) {
                         if (count($row->pegawai) == 1) {
-                            $str .= '<li class="list-group-item p-0">' . $r->nama_pegawai . '</li>';
+                            $str .= '<li class="list-group-item p-0">' . $r->nama_pegawai . ($row->sppd->tamu ? ' <sup class="badge badge-warning" style="font-size:9px;">STD Tamu</sup>' : '') . '</li>';
                             break;
                         }
 

@@ -42,10 +42,16 @@ class CetakController extends Controller
         }
 
         $data = ['sppd' => $sppd];
+
+        $file = 'pdf.cetak-sppd';
+        if ($sppd->tamu == 1) {
+            $file = 'pdf.cetak-sppd-tamu';
+        }
+
         $pdf = PDF::setOptions([
             'isHtml5ParserEnabled' => true,
             'isRemoteEnabled' => true,
-        ])->loadView('pdf.cetak-sppd', $data)->setPaper('a4', 'portrait');
+        ])->loadView($file, $data)->setPaper('a4', 'portrait');
 
 
         $judul = date('Ymd') . ' - ' . 'Surat Perjalanan Dinas' . '.pdf';

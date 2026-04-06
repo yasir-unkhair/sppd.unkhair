@@ -35,7 +35,7 @@ class LaporanStdController extends Controller
                     'app_surat_tugas_dinas.tanggal_selesai_tugas',
                     'app_surat_tugas_dinas.departemen_id'
                 ])
-                ->orderBy('app_surat_tugas_dinas.tanggal_std', 'DESC')
+                ->orderBy('app_surat_tugas_dinas.created_at', 'DESC')
                 ->orderBy('app_surat_tugas_dinas.departemen_id', 'ASC');
             return DataTables::eloquent($listdata)
                 ->addIndexColumn()

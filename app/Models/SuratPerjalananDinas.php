@@ -61,7 +61,9 @@ class SuratPerjalananDinas extends Model
         'pejabat_ppk',
         'tanggal_review',
         'reviewer_id',
-        'alasan'
+        'alasan',
+        'tamu',
+        'ppk_tamu',
     ];
 
     public function scopepencarian($query, $value)

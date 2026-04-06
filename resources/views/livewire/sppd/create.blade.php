@@ -279,6 +279,60 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+
+                    <br>
+                    <br>
+                    <h3>SPPD Tamu</h3>
+                    <hr>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="judul_konten">
+                                    SPPD Tamu :
+                                </label>
+                                <div class="input-group">
+                                    <select class="form-control" wire:model="tamu" style="width: 100%;">
+                                        <option value="0">Bukan</option>
+                                        <option value="1">Ya</option>
+                                    </select>
+                                </div>
+
+                                @error('tamu')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-md-9"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="judul_konten">
+                                    PPK Tamu :
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" wire:model="ppk_tamu"
+                                        placeholder="PPK Tamu">
+                                </div>
+                                @error('ppk_tamu')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="judul_konten">
+                                    NIP PPK :
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" wire:model="nip_ppk"
+                                        placeholder="NIP PPK">
+                                </div>
+                                @error('nip_ppk')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
