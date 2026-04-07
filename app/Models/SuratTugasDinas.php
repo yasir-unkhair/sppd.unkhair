@@ -102,14 +102,14 @@ class SuratTugasDinas extends Model
         }
     }
 
-    public function user()
-    {
-        return $this->hasOne(User::class, 'id', 'user_id');
-    }
-
     public function sppd()
     {
         return $this->hasOne(SuratPerjalananDinas::class, 'id', 'spd_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function pegawai()
