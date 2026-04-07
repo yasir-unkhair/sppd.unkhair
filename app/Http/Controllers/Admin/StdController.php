@@ -78,7 +78,7 @@ class StdController extends Controller
                             if (count($row->pegawai) == 1) {
                                 $str .=
                                     '<li class="list-group-item p-0">' .
-                                    $r->nama_pegawai . ($row->sppd->tamu ? ' <sup class="badge badge-warning" style="font-size:9px;">STD Tamu</sup>' : '') .
+                                    $r->nama_pegawai . ($row->sppd?->tamu ? ' <sup class="badge badge-warning" style="font-size:9px;">STD Tamu</sup>' : '') .
                                     '</li>';
                                 break;
                             }
