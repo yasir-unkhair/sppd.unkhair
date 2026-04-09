@@ -40,10 +40,10 @@ class CetakController extends Controller
                 ->errorCorrection('M')
                 ->generate($dt, $file_path);
 
-            if (file_exists(public_path($file_path))) {
-                \Log::info('QR SPPD berhasil: ' . public_path($file_path));
+            if (file_exists($file_path)) {
+                \Log::info('QR SPPD berhasil: ' . $file_path);
             } else {
-                \Log::error('QR SPPD gagal dibuat: ' . public_path($file_path));
+                \Log::error('QR SPPD gagal dibuat: ' . $file_path);
             }
         }
 
@@ -98,10 +98,10 @@ class CetakController extends Controller
                 ->errorCorrection('M')
                 ->generate($dt, $file_path);
 
-            if (file_exists(public_path($file_path))) {
-                \Log::info('QR STD berhasil: ' . public_path($file_path));
+            if (file_exists($file_path)) {
+                \Log::info('QR STD berhasil: ' . $file_path);
             } else {
-                \Log::error('QR STD gagal dibuat: ' . public_path($file_path));
+                \Log::error('QR STD gagal dibuat: ' . $file_path);
             }
         }
 
