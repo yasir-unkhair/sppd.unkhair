@@ -171,7 +171,7 @@ if (!function_exists('str_role')) {
 if (!function_exists('get_image')) {
     function get_image($path_image = NULL)
     {
-        if (env('APP_ENV') != 'local') {
+        if (env('APP_ENV') == 'local') {
             return $path_image;
         }
 
