@@ -27,18 +27,24 @@ class CetakController extends Controller
 
         $lokasi_file = public_path($qrcode_path);
         if (!File::isDirectory($lokasi_file)) {
-            File::makeDirectory($lokasi_file, 0755, true, true);
+            File::makeDirectory($lokasi_file, 0775, true, true);
         }
 
         if (!file_exists($lokasi_file . $qrcode_name)) {
             // generate qrcode
-            $file_path = $qrcode_path . $qrcode_name;
+            $file_path = public_path($qrcode_path) . $qrcode_name;
             $dt = route('frontend.verifikasi-sppd', encode_arr(['sppd_id' => $params['sppd_id']]));
             QrCode::size(512)
                 ->format('png')
                 ->merge(public_path('images/logo.png'), 0.2, true)
                 ->errorCorrection('M')
                 ->generate($dt, $file_path);
+
+            if (file_exists(public_path($file_path))) {
+                \Log::info('QR SPPD berhasil: ' . public_path($file_path));
+            } else {
+                \Log::error('QR SPPD gagal dibuat: ' . public_path($file_path));
+            }
         }
 
         $data = ['sppd' => $sppd];
@@ -78,19 +84,25 @@ class CetakController extends Controller
 
         $lokasi_file = public_path($qrcode_path);
         if (!File::isDirectory($lokasi_file)) {
-            File::makeDirectory($lokasi_file, 0755, true, true);
+            File::makeDirectory($lokasi_file, 0775, true, true);
         }
 
         // generate qrcode jika file belum ada dan sudah diverifikasi
         if (!file_exists($lokasi_file . $qrcode_name) && $std->reviewer_id) {
             // generate qrcode
-            $file_path = $qrcode_path . $qrcode_name;
+            $file_path = public_path($qrcode_path) . $qrcode_name;
             $dt = route('frontend.verifikasi-std', encode_arr(['stugas_id' => $params['stugas_id']]));
             QrCode::size(512)
                 ->format('png')
                 ->merge(public_path('images/logo.png'), 0.2, true)
                 ->errorCorrection('M')
                 ->generate($dt, $file_path);
+
+            if (file_exists(public_path($file_path))) {
+                \Log::info('QR STD berhasil: ' . public_path($file_path));
+            } else {
+                \Log::error('QR STD gagal dibuat: ' . public_path($file_path));
+            }
         }
 
         $data = ['std' => $std];
