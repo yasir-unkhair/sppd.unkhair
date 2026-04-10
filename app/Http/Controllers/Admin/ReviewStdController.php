@@ -40,6 +40,7 @@ class ReviewStdController extends Controller
                 ])
                 //->orderByRaw("FIELD(status_std , '102', '200') ASC")
                 ->orderBy('app_surat_tugas_dinas.created_at', 'DESC');
+                
             return DataTables::eloquent($listdata)
                 ->addIndexColumn()
                 ->editColumn('action', function ($row) {
