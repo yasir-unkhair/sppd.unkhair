@@ -40,7 +40,7 @@ class ReviewStdController extends Controller
                 ])
                 //->orderByRaw("FIELD(status_std , '102', '200') ASC")
                 ->orderBy('app_surat_tugas_dinas.created_at', 'DESC');
-                
+
             return DataTables::eloquent($listdata)
                 ->addIndexColumn()
                 ->editColumn('action', function ($row) {
@@ -75,7 +75,7 @@ class ReviewStdController extends Controller
                     $str = '<ul class="list-group list-group-flush">';
                     foreach ($row->pegawai as $index => $r) {
                         if (count($row->pegawai) == 1) {
-                            $str .= '<li class="list-group-item p-0">' . $r->nama_pegawai . ($row->sppd->tamu ? ' <sup class="badge badge-warning" style="font-size:9px;">STD Tamu</sup>' : '') . '</li>';
+                            $str .= '<li class="list-group-item p-0">' . $r->nama_pegawai . ($row->sppd?->tamu ? ' <sup class="badge badge-warning" style="font-size:9px;">STD Tamu</sup>' : '') . '</li>';
                             break;
                         }
 
